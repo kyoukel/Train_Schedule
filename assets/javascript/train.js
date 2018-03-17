@@ -119,5 +119,7 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
     $('#trainTable').append(trainData);
     // $('#trainTable > tbody').append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td>" + firstTrain + "</td><td>" + frequency + "</td></tr>");
 
-
+     // console log errors
+    }, function (errorObject) {
+        console.log("ERRORS: " + errorObject.code);
 });
