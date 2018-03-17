@@ -17,6 +17,8 @@ var trainName = "";
 var destination = "";
 var firstTrain = 0;
 var frequency = 0;
+var minutesToArrival;
+var arrivalTime;
 
 // on click event 
 // Targets button id #addTrain & gets the form data and pushes it to the firebase database
@@ -35,15 +37,21 @@ $("#addTrain").on("click", function (event) {
         // console.log(frequency);
 
     // Creates local "temporary" object for holding train data    
-    var newTrain = {    
+    // var newTrain = {    
+    //     trainName: trainName,
+    //     destination: destination,
+    //     firstTrain: firstTrain,
+    //     frequency: frequency,
+    // };
+
+    // push info to firebase
+    // database.ref().push(newTrain);
+    database.ref().push({
         trainName: trainName,
         destination: destination,
         firstTrain: firstTrain,
         frequency: frequency,
-    };
-
-    // push info to firebase
-    database.ref().push(newTrain);
+    });
         
     //logs everything to the console
     console.log(newTrain.trainName);
@@ -62,14 +70,15 @@ $("#addTrain").on("click", function (event) {
 }); 
 
 // Create Firebase event for adding new train schedules to the database and a row in the html when a user adds an entry
-database.ref().on("child_added", function(childSnapshot, prevChildKey) {
+// database.ref().on("child_added", function(childSnapshot, prevChildKey) {
+database.ref().on("child_added", function(snapshot) {
 
-    // console.log(childSnapshot.val());
+    console.log(snapshot.val());
 
-    var trainName = childSnapshot.val().trainName;
-    var destination = childSnapshot.val().destination;
-    var firstTrain = childSnapshot.val().firstTrain;
-    var frequency = childSnapshot.val().frequency;
+    // var trainName = childSnapshot.val().trainName;
+    // var destination = childSnapshot.val().destination;
+    // var firstTrain = childSnapshot.val().firstTrain;
+    // var frequency = childSnapshot.val().frequency;
 
     // Train Info
     // console.log(trainName);
@@ -77,18 +86,21 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
     // console.log(firstTrain);
     // console.log(frequency);
 
-    // console.log(snapshot.val().trainName);
-    // console.log(snapshot.val().destination);
-    // console.log(snapshot.val().firstTrain);
-    // console.log(snapshot.val().frequency);
+    console.log(snapshot.val().trainName);
+    console.log(snapshot.val().destination);
+    console.log(snapshot.val().firstTrain);
+    console.log(snapshot.val().frequency);
 
     // log object to the console.
-    // console.log(childSnapshot.val());
+    console.log(snapshot.val());
 
     // First Train Time (pushed back 1 year to make sure it comes before current time)
 
     // CONSOLE READING THAT SNAPSHOT OR CHILDSNAPSHOT IS NOT DEFINED--???
-    var firstTrainTime = moment(childSnapshot.val().firstTrain, "HH:mm").subtract(1, "years");
+    // var firstTrainTime = moment(childSnapshot.val().firstTrain, "hh:mm").subtract(1, "years");
+    // console.log(firstTrainTime);
+
+    var firstTrainTime = moment(snapshot.val().firstTrain, "hh:mm").subtract(1, "years");
     console.log(firstTrainTime);
 
     // gets the current time
@@ -103,17 +115,26 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
     var timeRemaining = timeDifference % snapshot.val().frequency;
     // console.log("Time Remaining");
 
+   
+
 
     // train table 
     var trainData = $('<tr>');
 
     // Append train data into the table
-    trainData.append(`<td>${childSnapshot.val().trainName}</td>`);
+    // trainData.append(`<td>${childSnapshot.val().trainName}</td>`);
+    //     console.log(snapshot.val());
+    // trainData.append(`<td>${childSnapshot.val().destination}</td>`);
+    //     console.log(snapshot.val());
+    // trainData.append(`<td>${childSnapshot.val().frequency}</td>`);
+    //     console.log(childSnapshot.val());
+
+    trainData.append(`<td>${snapshot.val().trainName}</td>`);
         console.log(snapshot.val());
-    trainData.append(`<td>${childSnapshot.val().destination}</td>`);
+    trainData.append(`<td>${snapshot.val().destination}</td>`);
         console.log(snapshot.val());
-    trainData.append(`<td>${childSnapshot.val().frequency}</td>`);
-        console.log(childSnapshot.val());
+    trainData.append(`<td>${snapshot.val().frequency}</td>`);
+        console.log(snapshot.val());
 
     // Add each train's data into the table
     $('#trainTable').append(trainData);
