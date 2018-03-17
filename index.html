@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Train Schedule</title>
+    <!--Bootstrap Link-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <!--CSS Stylesheet Link-->
+    <!-- <link rel="stylesheet" type="text/stylesheet" href="assets/style/style.css"> -->
+    
+    <!--Firebase Reference-->
+    <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+</head>
+<body>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="assets/javascript/train.js"></script>
+</body>
+</html>
+
+<!-- Schedule Tracker -->
+<header class="header">
+    <div class="row">
+        <div class="col-md-6 offset-lg-3">
+            <div class="jumbotron bg-danger">
+                <h1 class="text-center text-white">Anytime is Train Time</h1>
+                <h5 class="text-white text-center">"Choo Choo. Chee Chee."</h5>
+            </div>
+        </div>   
+    </div>
+</header>
+
+<div id="main" class="container">
+    <div class="row card">
+        <div class="card-header bg-primary">
+            <h5 class="text-white">Current Train Schedule</h5>
+        </div>
+        <div class="col-sm-12">
+                    
+            <div id="trainData" class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Train Name</th>
+                            <th scope="col">Destination</th>
+                            <th scope="col">Frequency (min)</th>
+                            <th scope="col">Next Arrival</th>
+                            <th scope="col">Minutes Away</th>
+                        </tr>
+                    </thead>
+
+
