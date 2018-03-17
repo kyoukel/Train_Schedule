@@ -78,11 +78,14 @@ database.ref().on("child_added", function (snapshot) {
     // train table 
     var trainData = $('<tr>');
 
-    // Append train information table fields
+    // Append train data into the table
     trainData.append(`<td>${snapshot.val().trainName}</td>`);
         console.log(snapshot.val());
-    // trainInfo.append(`<td>${snapshot.val().destination}</td>`);
-    // trainInfo.append(`<td>${snapshot.val().frequency}</td>`);
+    trainData.append(`<td>${snapshot.val().destination}</td>`);
+        console.log(snapshot.val());
+    trainData.append(`<td>${snapshot.val().frequency}</td>`);
+        console.log(snapshot.val());
 
+    
 
 });
