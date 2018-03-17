@@ -53,11 +53,11 @@ $("#addTrain").on("click", function (event) {
         frequency: frequency,
     });
         
-    //logs everything to the console
-    console.log(newTrain.trainName);
-    console.log(newTrain.destination);
-    console.log(newTrain.firstTrain);
-    console.log(newTrain.frequency);
+    // //logs everything to the console
+    // console.log(newTrain.trainName);
+    // console.log(newTrain.destination);
+    // console.log(newTrain.firstTrain);
+    // console.log(newTrain.frequency);
 
     // Alert
     alert("Train Schedule successfully added");
@@ -73,7 +73,8 @@ $("#addTrain").on("click", function (event) {
 // database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 database.ref().on("child_added", function(snapshot) {
 
-    console.log(snapshot.val());
+    // THIS WORKS!
+    // console.log(snapshot.val());
 
     // var trainName = childSnapshot.val().trainName;
     // var destination = childSnapshot.val().destination;
@@ -86,13 +87,14 @@ database.ref().on("child_added", function(snapshot) {
     // console.log(firstTrain);
     // console.log(frequency);
 
-    console.log(snapshot.val().trainName);
-    console.log(snapshot.val().destination);
-    console.log(snapshot.val().firstTrain);
-    console.log(snapshot.val().frequency);
+    // THIS WORKS!
+    // console.log(snapshot.val().trainName);
+    // console.log(snapshot.val().destination);
+    // console.log(snapshot.val().firstTrain);
+    // console.log(snapshot.val().frequency);
 
-    // log object to the console.
-    console.log(snapshot.val());
+    // log object to the console. WORKS!
+    // console.log(snapshot.val());
 
     // First Train Time (pushed back 1 year to make sure it comes before current time)
 
@@ -101,11 +103,12 @@ database.ref().on("child_added", function(snapshot) {
     // console.log(firstTrainTime);
 
     var firstTrainTime = moment(snapshot.val().firstTrain, "hh:mm").subtract(1, "years");
-    console.log(firstTrainTime);
+    // THIS WORKS!
+    // console.log(firstTrainTime);
 
     // gets the current time
     var currentTime = moment();
-    console.log("Time Now Is: " + moment(currentTime).format("hh:mm"));
+    // console.log("Time Now Is: " + moment(currentTime).format("hh:mm")); // WORKS!
   
     // Calculates the time difference
     var timeDifference = moment().diff(moment(firstTrainTime), "minutes");
@@ -115,7 +118,14 @@ database.ref().on("child_added", function(snapshot) {
     var timeRemaining = timeDifference % snapshot.val().frequency;
     // console.log("Time Remaining");
 
-   
+    // Next Train
+    arrivalTime = moment().add(minutesToArrival, "minutes");
+    arrivalTime = moment(arrivalTime).format("hh:mm");
+    console.log("arrival time is: " + moment(arrivalTime).format("hh:mm")); // Arrival Time is invalid???
+
+    // Minutes Until Train
+    minutesToArrival = snapshot.val().frequency - timeRemaining;
+    // console.log("minutes to arrival: " + minutesToArrival);
 
 
     // train table 
@@ -130,10 +140,14 @@ database.ref().on("child_added", function(snapshot) {
     //     console.log(childSnapshot.val());
 
     trainData.append(`<td>${snapshot.val().trainName}</td>`);
-        console.log(snapshot.val());
+        // console.log(snapshot.val()); // WORKS!
     trainData.append(`<td>${snapshot.val().destination}</td>`);
-        console.log(snapshot.val());
+        // console.log(snapshot.val()); // WORKS!
     trainData.append(`<td>${snapshot.val().frequency}</td>`);
+        // console.log(snapshot.val()); // WORKS!
+    trainData.append('<td>${arrivalTime}</td>');
+        console.log(snapshot.val());
+    trainData.append('<td>${minutesToArrival}</td>');
         console.log(snapshot.val());
 
     // Add each train's data into the table
