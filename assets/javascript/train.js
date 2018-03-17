@@ -57,8 +57,32 @@ database.ref().on("child_added", function (snapshot) {
     // log object to the console.
     console.log(snapshot.val());
 
+    // First Train Time (pushed back 1 year to make sure it comes before current time)
+    var firstTrainTime = moment(snapshot.val().firstTrain, "hh:mm").subtract(1, "years");
+    // console.log(initialTimeConverted);
+
+
+    // gets the current time
     var currentTime = moment();
     console.log("Time Now Is: " + moment(currentTime).format("hh:mm"));
   
+    // Calculates the time difference
+    var timeDifference = moment().diff(moment(firstTrainTime), "minutes");
+    // console.log("Time Difference: " + diffTime);
+
+    // Time remaining
+    var timeRemaining = timeDifference % snapshot.val().frequency;
+    // console.log("Time Remaining");
+
+
+    // train table 
+    var trainData = $('<tr>');
+
+    // Append train information table fields
+    trainData.append(`<td>${snapshot.val().trainName}</td>`);
+        console.log(snapshot.val());
+    // trainInfo.append(`<td>${snapshot.val().destination}</td>`);
+    // trainInfo.append(`<td>${snapshot.val().frequency}</td>`);
+
 
 });
