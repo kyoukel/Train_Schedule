@@ -25,42 +25,71 @@ $("#addTrain").on("click", function (event) {
     event.preventDefault();
   
     // gets user input from form
-    trainName = $("#trainName").val().trim();
-        console.log(trainName);
-    destination = $("#destination").val().trim();
-        console.log(destination);
-    firstTrain = $("#firstTrain").val().trim();
-        console.log(firstTrain);
-    frequency = $("#frequency").val().trim();
-        console.log(frequency);
-  
-    // push info to firebase
-    database.ref().push({
+    trainName = $("#train-name-input").val().trim();
+        // console.log(trainName);
+    destination = $("#destination-input").val().trim();
+        // console.log(destination);
+    firstTrain = $("#first-train-input").val().trim();
+        // console.log(firstTrain);
+    frequency = $("#frequency-input").val().trim();
+        // console.log(frequency);
+
+    // Creates local "temporary" object for holding train data    
+    var newTrain = {    
         trainName: trainName,
         destination: destination,
         firstTrain: firstTrain,
         frequency: frequency,
-    });
+    };
 
+    // push info to firebase
+    database.ref().push(newTrain);
+        
+    //logs everything to the console
+    console.log(newTrain.trainName);
+    console.log(newTrain.destination);
+    console.log(newTrain.firstTrain);
+    console.log(newTrain.frequency);
+
+    // Alert
+    alert("Train Schedule successfully added");
+
+    // Clears all of the text-boxes
+    $("#train-name-input").val("");
+    $("#destination-input").val("");
+    $("#first-train-input").val("");
+    $("#frequency-input").val("");
 }); 
 
-// database reference,
-// checks for child added activity in database
-// then adds data to form table
-database.ref().on("child_added", function (snapshot) {
-    console.log(snapshot.val());
-    console.log(snapshot.val().trainName);
-    console.log(snapshot.val().destination);
-    console.log(snapshot.val().firstTrain);
-    console.log(snapshot.val().frequency);
+// Create Firebase event for adding new train schedules to the database and a row in the html when a user adds an entry
+database.ref().on("child_added", function(childSnapshot, prevChildKey) {
+
+    // console.log(childSnapshot.val());
+
+    var trainName = childSnapshot.val().trainName;
+    var destination = childSnapshot.val().destination;
+    var firstTrain = childSnapshot.val().firstTrain;
+    var frequency = childSnapshot.val().frequency;
+
+    // Train Info
+    // console.log(trainName);
+    // console.log(destination);
+    // console.log(firstTrain);
+    // console.log(frequency);
+
+    // console.log(snapshot.val().trainName);
+    // console.log(snapshot.val().destination);
+    // console.log(snapshot.val().firstTrain);
+    // console.log(snapshot.val().frequency);
 
     // log object to the console.
-    console.log(snapshot.val());
+    // console.log(childSnapshot.val());
 
     // First Train Time (pushed back 1 year to make sure it comes before current time)
-    var firstTrainTime = moment(snapshot.val().firstTrain, "hh:mm").subtract(1, "years");
-    // console.log(initialTimeConverted);
 
+    // CONSOLE READING THAT SNAPSHOT OR CHILDSNAPSHOT IS NOT DEFINED--???
+    var firstTrainTime = moment(childSnapshot.val().firstTrain, "HH:mm").subtract(1, "years");
+    console.log(firstTrainTime);
 
     // gets the current time
     var currentTime = moment();
@@ -79,13 +108,16 @@ database.ref().on("child_added", function (snapshot) {
     var trainData = $('<tr>');
 
     // Append train data into the table
-    trainData.append(`<td>${snapshot.val().trainName}</td>`);
+    trainData.append(`<td>${childSnapshot.val().trainName}</td>`);
         console.log(snapshot.val());
-    trainData.append(`<td>${snapshot.val().destination}</td>`);
+    trainData.append(`<td>${childSnapshot.val().destination}</td>`);
         console.log(snapshot.val());
-    trainData.append(`<td>${snapshot.val().frequency}</td>`);
-        console.log(snapshot.val());
+    trainData.append(`<td>${childSnapshot.val().frequency}</td>`);
+        console.log(childSnapshot.val());
 
-    
+    // Add each train's data into the table
+    $('#trainTable').append(trainData);
+    // $('#trainTable > tbody').append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td>" + firstTrain + "</td><td>" + frequency + "</td></tr>");
+
 
 });
