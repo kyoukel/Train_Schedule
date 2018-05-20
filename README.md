@@ -1,4 +1,4 @@
-# Firebase_Train Scheduler
+# Firebase | Train Scheduler
     
 ## Overview
 
@@ -13,8 +13,8 @@ Create a train schedule application that incorporates Firebase to host arrival a
 
 * Train Name
 * Destination
-* First Train Time -- in military time
-* Frequency -- in minutes
+* First Train Time -- in `military time`
+* Frequency -- in `minutes`
 * Code this app to calculate when the next train will arrive; this should be relative to the current time
 * Users from many different machines must be able to view same train times
 
@@ -28,6 +28,6 @@ Create a train schedule application that incorporates Firebase to host arrival a
 
 > As a final challenge, make it so that only users who log into the site with their Google or GitHub accounts can use your site. 
 
-You'll need to read up on Firebase authentication for this bonus exercise.
+**You'll need to read up on Firebase authentication for this bonus exercise.**
 
 Good Luck!
