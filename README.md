@@ -18,4 +18,4 @@ Create a train schedule application that incorporates Firebase to host arrival a
 - [x] Code this app to calculate when the next train will arrive; this should be relative to the current time
 - [x] Users from many different machines must be able to view same train times
 
-##Happy Scheduling!
+## Happy Scheduling!
