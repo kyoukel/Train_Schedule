@@ -16,13 +16,13 @@ var trainData = firebase.database();
 // Targets button id #addTrain & gets the form data and pushes it to the firebase database
 $("#addTrain").on("click",function() {
     // gets user input from form
-    trainName = $("#train-name-input").val().trim();
+    trainName = $("#trainNameInput").val().trim();
     // console.log(trainName);
-    destination = $("#destination-input").val().trim();
+    destination = $("#destinationInput").val().trim();
     // console.log(destination);
-    firstTrain = moment($("#first-train-input").val().trim(),"HH:mm").subtract(10,"years").format("X");
+    firstTrain = moment($("#firstTrainInput").val().trim(),"HH:mm").subtract(10,"years").format("X");
     // console.log(firstTrain);
-    frequency = $("#frequency-input").val().trim();
+    frequency = $("#frequencyInput").val().trim();
     // console.log(frequency);
 
     var newTrain = {
@@ -40,10 +40,10 @@ $("#addTrain").on("click",function() {
     alert("Train added successfully!");
 
     // Clears all of the text-boxes
-    $("#train-name-input").val("");
-    $("#destination-input").val("");
-    $("#first-train-input").val("");
-    $("#frequency-input").val("");
+    $("#trainNameInput").val("");
+    $("#destinationInput").val("");
+    $("#firstTrainInput").val("");
+    $("#frequencyInput").val("");
 
     return false;
 })
@@ -59,9 +59,9 @@ trainData.ref().on("child_added", function(snapshot) {
    var minutes = frequency - remainder;
    var arrival = moment().add(minutes,"m").format("hh:mm A");
 
-//    console.log(remainder);
-//    console.log(minutes);
-//    console.log(arrival);
+   console.log(remainder);
+   console.log(minutes);
+   console.log(arrival);
 
     $("trainTable > tBody").append("<tr><td>"+name+"</td><td>"+destination+"</td><td>"+frequency+"</td><td>"+arrival+"</td><td>"+minutes+"</td><tr>");
 })
